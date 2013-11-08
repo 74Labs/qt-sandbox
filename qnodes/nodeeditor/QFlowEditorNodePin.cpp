@@ -3,7 +3,7 @@
 #include <QFlowEditorNode.h>
 #include <QFlowEditorNodePinConnection.h>
 
-QFlowEditorNodePin::QFlowEditorNodePin(QFlowEditorNode *parent):
+QFlowEditorNodePinItem::QFlowEditorNodePinItem(QFlowEditorNodeItem *parent):
     QGraphicsPathItem((QGraphicsItem*)parent)
 {
     borderPen = QPen(Qt::black);
@@ -32,21 +32,21 @@ QFlowEditorNodePin::QFlowEditorNodePin(QFlowEditorNode *parent):
     isHovered = false;
     multiSignal = false;
 	m_portFlags = 0;
-    parentNode = (QFlowEditorNode*)parent;
+    parentNode = (QFlowEditorNodeItem*)parent;
 }
 
-QFlowEditorNodePin::~QFlowEditorNodePin()
+QFlowEditorNodePinItem::~QFlowEditorNodePinItem()
 {
     foreach(QFlowEditorPinConnection *conn, m_connections)
 		delete conn;
 }
 
-bool QFlowEditorNodePin::isConnected()
+bool QFlowEditorNodePinItem::isConnected()
 {
     return m_connections.size();
 }
 
-void QFlowEditorNodePin::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void QFlowEditorNodePinItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget);
     Q_UNUSED(option);
@@ -65,13 +65,13 @@ void QFlowEditorNodePin::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->drawPath(path());
 }
 
-void QFlowEditorNodePin::setName(const QString &n)
+void QFlowEditorNodePinItem::setName(const QString &n)
 {
 	name = n;
     label.setPlainText(n);
 }
 
-void QFlowEditorNodePin::setIsOutput(bool o)
+void QFlowEditorNodePinItem::setIsOutput(bool o)
 {
 	isOutput_ = o;
 
@@ -84,37 +84,37 @@ void QFlowEditorNodePin::setIsOutput(bool o)
         label.setPos(radius_ + margin, -label.boundingRect().height()/2);
 }
 
-int QFlowEditorNodePin::radius()
+int QFlowEditorNodePinItem::radius()
 {
 	return radius_;
 }
 
-bool QFlowEditorNodePin::isOutput()
+bool QFlowEditorNodePinItem::isOutput()
 {
 	return isOutput_;
 }
 
-QVector<QFlowEditorPinConnection*>& QFlowEditorNodePin::connections()
+QVector<QFlowEditorPinConnection*>& QFlowEditorNodePinItem::connections()
 {
 	return m_connections;
 }
 
-QFlowEditorNode* QFlowEditorNodePin::node() const
+QFlowEditorNodeItem* QFlowEditorNodePinItem::node() const
 {
     return parentNode;
 }
 
-quint64 QFlowEditorNodePin::ptr()
+quint64 QFlowEditorNodePinItem::ptr()
 {
 	return m_ptr;
 }
 
-void QFlowEditorNodePin::setPtr(quint64 p)
+void QFlowEditorNodePinItem::setPtr(quint64 p)
 {
 	m_ptr = p;
 }
 
-bool QFlowEditorNodePin::isConnectedTo(QFlowEditorNodePin *other)
+bool QFlowEditorNodePinItem::isConnectedTo(QFlowEditorNodePinItem *other)
 {
     foreach(QFlowEditorPinConnection *conn, m_connections)
         if (conn->sourcePin() == other || conn->destinationPin() == other)
@@ -123,7 +123,7 @@ bool QFlowEditorNodePin::isConnectedTo(QFlowEditorNodePin *other)
 	return false;
 }
 
-QVariant QFlowEditorNodePin::itemChange(GraphicsItemChange change, const QVariant &value)
+QVariant QFlowEditorNodePinItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	if (change == ItemScenePositionHasChanged)
 	{
@@ -136,28 +136,28 @@ QVariant QFlowEditorNodePin::itemChange(GraphicsItemChange change, const QVarian
     return value;
 }
 
-void QFlowEditorNodePin::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+void QFlowEditorNodePinItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     isHovered = true;
     update();
 }
 
-void QFlowEditorNodePin::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+void QFlowEditorNodePinItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     isHovered = false;
     update();
 }
 
-void QFlowEditorNodePin::dragEnterEvent(QGraphicsSceneHoverEvent *event)
+void QFlowEditorNodePinItem::dragEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     isHovered = true;
     update();
 }
 
-void QFlowEditorNodePin::dragLeaveEvent(QGraphicsSceneHoverEvent *event)
+void QFlowEditorNodePinItem::dragLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     isHovered = false;

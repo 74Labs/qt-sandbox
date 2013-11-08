@@ -3,30 +3,30 @@
 #include <QGraphicsPathItem>
 #include <QPen>
 
-class QFlowEditorNodePin;
+class QFlowEditorNodePinItem;
 
 class QFlowEditorPinConnection : public QGraphicsPathItem
 {
 public:
 	enum { Type = QGraphicsItem::UserType + 2 };
 
-    QFlowEditorPinConnection(QFlowEditorNodePin *srcPin = 0, QFlowEditorNodePin *destPin = 0, QGraphicsItem *parent = 0);
+    QFlowEditorPinConnection(QFlowEditorNodePinItem *srcPin = 0, QFlowEditorNodePinItem *destPin = 0, QGraphicsItem *parent = 0);
     ~QFlowEditorPinConnection();
 
     void setStartPos(const QPointF &p);
     void setEndPos(const QPointF &p);
-    void setSourcePin(QFlowEditorNodePin *p);
-    void setDestinationPin(QFlowEditorNodePin *p);
+    void setSourcePin(QFlowEditorNodePinItem *p);
+    void setDestinationPin(QFlowEditorNodePinItem *p);
     void updatePositions();
 	void updatePath();
-    QFlowEditorNodePin* sourcePin() const;
-    QFlowEditorNodePin* destinationPin() const;
+    QFlowEditorNodePinItem* sourcePin() const;
+    QFlowEditorNodePinItem* destinationPin() const;
 
 	int type() const { return Type; }
 
 private:
     QPointF srcPos;
     QPointF destPos;
-    QFlowEditorNodePin *srcPin;
-    QFlowEditorNodePin *destPin;
+    QFlowEditorNodePinItem *srcPin;
+    QFlowEditorNodePinItem *destPin;
 };

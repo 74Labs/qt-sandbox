@@ -10,12 +10,11 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    QFlowEditor* getFlowEditor() const { return flowEditor; }
+    FlowEditor* getFlowEditor() const { return flowEditor; }
 
 private:
     QFlowEditor *flowEditor;

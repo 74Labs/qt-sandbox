@@ -26,7 +26,10 @@ HEADERS  += \
     ../nodeeditor/QFlowEditorNodePin.h \
     ../nodeeditor/QFlowEditor.h \
     ../nodeeditor/QFlowEditorNode.h \
-    ../nodeeditor/QFlowEditorNodePinConnection.h
+    ../nodeeditor/QFlowEditorNodePinConnection.h \
+    ../nodeeditor/FlowEditor.h \
+    ../nodeeditor/FlowEditorNodeItem.h \
+    ../nodeeditor/Node.h
 
 FORMS    += \ 
     mainwindow.ui

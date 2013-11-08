@@ -3,7 +3,7 @@
 #include <QFlowEditorNodePin.h>
 #include <QDebug>
 
-QFlowEditorNode::QFlowEditorNode(const QString &title, QGraphicsItem *parent) : QGraphicsPathItem(parent)
+QFlowEditorNodeItem::QFlowEditorNodeItem(const QString &title, QGraphicsItem *parent) : QGraphicsPathItem(parent)
 {
     borderPen = QPen(Qt::black);
     borderPen.setCosmetic(true);
@@ -38,25 +38,25 @@ QFlowEditorNode::QFlowEditorNode(const QString &title, QGraphicsItem *parent) : 
     prepare();
 }
 
-void QFlowEditorNode::prepare()
+void QFlowEditorNodeItem::prepare()
 {
 
-    width = std::min(iconItem.boundingRect().width() + 2 * contentPadding;
+    width = std::max(DEFAULT_MIN_WIDTH, (int)iconItem.boundingRect().width() + 2 * contentPadding);
 
     int y = contentPadding;
 
     titleItem.setPos(contentPadding, y);
 
-    y += titleItem.boundingRect().height();
+    y += titleItem.boundingRect().height() + contentPadding;
 
     iconItem.setPos(contentPadding, y);
 
     y += iconItem.boundingRect().height() + contentPadding;
 
     foreach(QGraphicsItem *port_, childItems()) {
-        if (port_->type() != QFlowEditorNodePin::Type)
+        if (port_->type() != QFlowEditorNodePinItem::Type)
             continue;
-        QFlowEditorNodePin *port = (QFlowEditorNodePin*) port_;
+        QFlowEditorNodePinItem *port = (QFlowEditorNodePinItem*) port_;
         if (port->isOutput())
             port->setPos(width, y);
         else
@@ -75,9 +75,9 @@ void QFlowEditorNode::prepare()
     borderItem.setPath(borderPath);
 }
 
-QFlowEditorNodePin* QFlowEditorNode::addPort(const QString &name, bool isOutput, int ptr)
+QFlowEditorNodePinItem* QFlowEditorNodeItem::addPin(const QString &name, bool isOutput, int ptr)
 {
-    QFlowEditorNodePin *port = new QFlowEditorNodePin(this);
+    QFlowEditorNodePinItem *port = new QFlowEditorNodePinItem(this);
 	port->setName(name);
 	port->setIsOutput(isOutput);
 	port->setPtr(ptr);
@@ -87,31 +87,31 @@ QFlowEditorNodePin* QFlowEditorNode::addPort(const QString &name, bool isOutput,
 	return port;
 }
 
-void QFlowEditorNode::addInputPort(const QString &name)
+void QFlowEditorNodeItem::addInputPin(const std::string &name)
 {
-	addPort(name, false);
+    addPin(QString::fromStdString(name), false);
 }
 
-void QFlowEditorNode::addOutputPort(const QString &name)
+void QFlowEditorNodeItem::addOutputPin(const std::string &name)
 {
-	addPort(name, true);
+    addPin(QString::fromStdString(name), true);
 }
 
-void QFlowEditorNode::addInputPorts(const QStringList &names)
+void QFlowEditorNodeItem::addInputPorts(const QStringList &names)
 {
 	foreach(QString n, names)
-		addInputPort(n);
+        addPin(n, false);
 }
 
-void QFlowEditorNode::addOutputPorts(const QStringList &names)
+void QFlowEditorNodeItem::addOutputPorts(const QStringList &names)
 {
 	foreach(QString n, names)
-		addOutputPort(n);
+        addPin(n, true);
 }
 
 #include <QStyleOptionGraphicsItem>
 
-void QFlowEditorNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void QFlowEditorNodeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	Q_UNUSED(option)
 	Q_UNUSED(widget)
@@ -130,35 +130,35 @@ void QFlowEditorNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 }
 
-QFlowEditorNode* QFlowEditorNode::clone()
+QFlowEditorNodeItem* QFlowEditorNodeItem::clone()
 {
-    QFlowEditorNode *b = new QFlowEditorNode(this->title());
+    QFlowEditorNodeItem *b = new QFlowEditorNodeItem(this->title());
     this->scene()->addItem(b);
 
 	foreach(QGraphicsItem *port_, childItems())
 	{
-        if (port_->type() == QFlowEditorNodePin::Type)
+        if (port_->type() == QFlowEditorNodePinItem::Type)
 		{
-            QFlowEditorNodePin *port = (QFlowEditorNodePin*) port_;
-            b->addPort(port->portName(), port->isOutput(), port->ptr());
+            QFlowEditorNodePinItem *port = (QFlowEditorNodePinItem*) port_;
+            b->addPin(port->portName(), port->isOutput(), port->ptr());
 		}
 	}
 
 	return b;
 }
 
-QVector<QFlowEditorNodePin*> QFlowEditorNode::ports()
+QVector<QFlowEditorNodePinItem*> QFlowEditorNodeItem::ports()
 {
-    QVector<QFlowEditorNodePin*> res;
+    QVector<QFlowEditorNodePinItem*> res;
 	foreach(QGraphicsItem *port_, childItems())
 	{
-        if (port_->type() == QFlowEditorNodePin::Type)
-            res.append((QFlowEditorNodePin*) port_);
+        if (port_->type() == QFlowEditorNodePinItem::Type)
+            res.append((QFlowEditorNodePinItem*) port_);
 	}
 	return res;
 }
 
-QVariant QFlowEditorNode::itemChange(GraphicsItemChange change, const QVariant &value)
+QVariant QFlowEditorNodeItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 
     Q_UNUSED(change);

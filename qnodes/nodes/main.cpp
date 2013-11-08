@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
-
-#include <QFlowEditorNode.h>
+#include <string>
 
 int main(int argc, char *argv[])
 {
@@ -9,23 +8,13 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(":/fonts/Ubuntu-Regular.ttf");
     MainWindow w;
 
-    w.setFont(QFont("Ubuntu"));
+    std::string in[] = {"in1","in2","in3"};
+    std::string out[] = {"out1","out2"};
 
-    QFlowEditorNode *b = new QFlowEditorNode(QLatin1String("test"));
-    w.getFlowEditor()->addItem(b);
-    b->addPort("t1", 0);
-    b->addInputPort("in1");
-    b->addInputPort("in2");
-    b->addInputPort("in3");
-    b->addOutputPort("out1");
-    b->addOutputPort("out2");
-    b->addOutputPort("out3");
-
-    for(int i = 0; i < 5; i ++) {
-        b = b->clone();
-        b->setPos(i * 175, 0);
-    }
-
+    w.getFlowEditor()->addNodeItem("AAA", in, 3, out, 2);
+    //w.getFlowEditor()->addNodeItem("BBB", 2, 2);
+    //w.getFlowEditor()->addNodeItem("CCC", 4, 1);
+    //w.getFlowEditor()->addNodeItem("DDD", 1, 2);
     w.show();
 
     return a.exec();

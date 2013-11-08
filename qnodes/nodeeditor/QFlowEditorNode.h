@@ -7,9 +7,11 @@
 #include <QFontMetrics>
 #include <QPainter>
 
-class QFlowEditorNodePin;
+#include <FlowEditorNodeItem.h>
 
-class QFlowEditorNode : public QGraphicsPathItem
+class QFlowEditorNodePinItem;
+
+class QFlowEditorNodeItem : public FlowEditorNodeItem, public QGraphicsPathItem
 {
 private:
 
@@ -23,16 +25,16 @@ public:
 
 	enum { Type = QGraphicsItem::UserType + 3 };
 
-    QFlowEditorNode(const QString &title, QGraphicsItem *parent = 0);
+    QFlowEditorNodeItem(const QString &title, QGraphicsItem *parent = 0);
 
-    QFlowEditorNodePin* addPort(const QString &name, bool isOutput, int ptr = 0);
-	void addInputPort(const QString &name);
-	void addOutputPort(const QString &name);
+    QFlowEditorNodePinItem* addPin(const QString &name, bool isOutput, int ptr = 0);
+    void addInputPin(const std::string &name);
+    void addOutputPin(const std::string &name);
 	void addInputPorts(const QStringList &names);
 	void addOutputPorts(const QStringList &names);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QFlowEditorNode* clone();
-    QVector<QFlowEditorNodePin*> ports();
+    QFlowEditorNodeItem* clone();
+    QVector<QFlowEditorNodePinItem*> ports();
 
 	int type() const { return Type; }
     const QString title() const { return titleItem.text(); }

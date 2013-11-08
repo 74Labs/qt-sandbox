@@ -12,3 +12,4 @@
 *.la
 *.a
 /qnodes\nodes/nodes.pro.user
+*.user

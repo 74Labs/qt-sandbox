@@ -2,7 +2,7 @@
 
 #include <QFlowEditorNodePin.h>
 
-QFlowEditorPinConnection::QFlowEditorPinConnection(QFlowEditorNodePin *sourcePin, QFlowEditorNodePin *destinationPin, QGraphicsItem *parent) : QGraphicsPathItem(parent)
+QFlowEditorPinConnection::QFlowEditorPinConnection(QFlowEditorNodePinItem *sourcePin, QFlowEditorNodePinItem *destinationPin, QGraphicsItem *parent) : QGraphicsPathItem(parent)
 {
 	setPen(QPen(Qt::black, 2));
 	setBrush(Qt::NoBrush);
@@ -29,14 +29,14 @@ void QFlowEditorPinConnection::setEndPos(const QPointF &p)
     destPos = p;
 }
 
-void QFlowEditorPinConnection::setSourcePin(QFlowEditorNodePin *p)
+void QFlowEditorPinConnection::setSourcePin(QFlowEditorNodePinItem *p)
 {
     srcPin = p;
 
     srcPin->connections().append(this);
 }
 
-void QFlowEditorPinConnection::setDestinationPin(QFlowEditorNodePin *p)
+void QFlowEditorPinConnection::setDestinationPin(QFlowEditorNodePinItem *p)
 {
     destPin = p;
 
@@ -69,12 +69,12 @@ void QFlowEditorPinConnection::updatePath()
 	setPath(p);
 }
 
-QFlowEditorNodePin* QFlowEditorPinConnection::sourcePin() const
+QFlowEditorNodePinItem* QFlowEditorPinConnection::sourcePin() const
 {
     return srcPin;
 }
 
-QFlowEditorNodePin* QFlowEditorPinConnection::destinationPin() const
+QFlowEditorNodePinItem* QFlowEditorPinConnection::destinationPin() const
 {
     return destPin;
 }

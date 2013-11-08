@@ -7,22 +7,24 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QFontDatabase>
 
+#include <FlowEditor.h>
+
 class QFlowEditorPinConnection;
 
-class QFlowEditor : public QGraphicsView
+class QFlowEditor : public QGraphicsView, public FlowEditor
 {
-
     Q_OBJECT
-
 public:
 
     explicit QFlowEditor(QWidget *parent = 0);
 
-    ~QFlowEditor();
+    virtual ~QFlowEditor();
 
-    void addItem(QGraphicsItem *item);
+    void addNodeItem(const std::string& name, std::vector<std::string>& inputPins, std::vector<std::string>& outputPins);
+    void addNodeItem(const std::string& name, std::string inputPins[], unsigned int inputPinsCount, std::string outputPins[], unsigned int outputPinsCount);
+    void addNodeItem(const std::string& name, unsigned int inputPins, unsigned int outputPins);
 
-	bool eventFilter(QObject *, QEvent *);
+    bool eventFilter(QObject *, QEvent *);
 
 signals:
 

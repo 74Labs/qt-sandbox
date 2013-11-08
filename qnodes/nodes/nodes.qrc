@@ -2,10 +2,7 @@
     <qresource prefix="/images">
         <file>icon.png</file>
     </qresource>
-    <qresource prefix="/fonts">
-        <file>Ubuntu-Regular.ttf</file>
-        <file>Ubuntu-Bold.ttf</file>
-    </qresource>
+    <qresource prefix="/fonts"/>
     <qresource prefix="/data">
         <file>nodes.xml</file>
     </qresource>

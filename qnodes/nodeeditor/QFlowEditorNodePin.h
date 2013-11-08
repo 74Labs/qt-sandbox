@@ -6,16 +6,16 @@
 #include <QPen>
 #include <QGraphicsSceneHoverEvent>
 
-class QFlowEditorNode;
+class QFlowEditorNodeItem;
 class QFlowEditorPinConnection;
 
-class QFlowEditorNodePin : public QGraphicsPathItem
+class QFlowEditorNodePinItem : public QGraphicsPathItem
 {
 public:
 	enum { Type = QGraphicsItem::UserType + 1 };
 
-    QFlowEditorNodePin(QFlowEditorNode *parent);
-    ~QFlowEditorNodePin();
+    QFlowEditorNodePinItem(QFlowEditorNodeItem *parent);
+    ~QFlowEditorNodePinItem();
 
 	void setName(const QString &n);
 	void setIsOutput(bool o);
@@ -29,12 +29,12 @@ public:
 
 	int type() const { return Type; }
 
-    QFlowEditorNode* node() const;
+    QFlowEditorNodeItem* node() const;
 
 	quint64 ptr();
 	void setPtr(quint64);
 
-    bool isConnectedTo(QFlowEditorNodePin*);
+    bool isConnectedTo(QFlowEditorNodePinItem*);
 
     bool isConnected();
 
@@ -50,7 +50,7 @@ protected:
 
 private:
 
-    QFlowEditorNode *parentNode;
+    QFlowEditorNodeItem *parentNode;
 	QString name;
 	bool isOutput_;
     QGraphicsTextItem label;
