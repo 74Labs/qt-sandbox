@@ -16,7 +16,7 @@ QFlowEditorNodePinItem::QFlowEditorNodePinItem(QFlowEditorNodeItem *parent):
     disconnectedBrush = QBrush(Qt::gray);
 
     label.setParentItem(this);
-    label.setFont(QFont("Ubuntu", 8));
+    //label.setFont(QFont("Ubuntu", 9));
 
     radius_ = 4;
     margin = 0;

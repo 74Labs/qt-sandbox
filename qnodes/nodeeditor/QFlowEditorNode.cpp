@@ -27,7 +27,7 @@ QFlowEditorNodeItem::QFlowEditorNodeItem(const QString &title, QGraphicsItem *pa
 
     titleItem.setParentItem(this);
     titleItem.setText(title);
-    titleItem.setFont(QFont("Consolas", 10, QFont::Bold));
+    //titleItem.setFont(QFont("Ubuntu", 10, QFont::Bold));
 
     iconItem.setParentItem(this);
     //iconItem.setPixmap(QPixmap(":/images/icon.png"));
