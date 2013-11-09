@@ -20,10 +20,14 @@ public:
 
     virtual ~QFlowEditor();
 
+    void addNodeItem(Node *node);
+
+    /*
     void addNodeItem(const std::string& name, std::vector<std::string>& inputPins, std::vector<std::string>& outputPins);
     void addNodeItem(const std::string& name, std::string inputPins[], unsigned int inputPinsCount, std::string outputPins[], unsigned int outputPinsCount);
     void addNodeItem(const std::string& name, unsigned int inputPins, unsigned int outputPins);
-
+    void addNodeItem(const std::string& name, NodePinList& inputPins, NodePinList& outputPins);
+    */
     bool eventFilter(QObject *, QEvent *);
 
 signals:

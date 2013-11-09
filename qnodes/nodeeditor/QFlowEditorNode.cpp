@@ -1,9 +1,8 @@
 #include <QFlowEditorNode.h>
 
 #include <QFlowEditorNodePin.h>
-#include <QDebug>
 
-QFlowEditorNodeItem::QFlowEditorNodeItem(const QString &title, QGraphicsItem *parent) : QGraphicsPathItem(parent)
+QFlowEditorNodeItem::QFlowEditorNodeItem(Node *node, QGraphicsItem *parent) : FlowEditorNodeItem(node), QGraphicsPathItem(parent)
 {
     borderPen = QPen(Qt::black);
     borderPen.setCosmetic(true);
@@ -26,7 +25,7 @@ QFlowEditorNodeItem::QFlowEditorNodeItem(const QString &title, QGraphicsItem *pa
     borderItem.setPos(0, 0);
 
     titleItem.setParentItem(this);
-    titleItem.setText(title);
+    titleItem.setText(QString::fromStdString(node->getName()));
     //titleItem.setFont(QFont("Ubuntu", 10, QFont::Bold));
 
     iconItem.setParentItem(this);
@@ -132,7 +131,7 @@ void QFlowEditorNodeItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 
 QFlowEditorNodeItem* QFlowEditorNodeItem::clone()
 {
-    QFlowEditorNodeItem *b = new QFlowEditorNodeItem(this->title());
+    QFlowEditorNodeItem *b = new QFlowEditorNodeItem(getNode());
     this->scene()->addItem(b);
 
 	foreach(QGraphicsItem *port_, childItems())

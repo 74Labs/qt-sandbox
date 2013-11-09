@@ -25,7 +25,7 @@ public:
 
 	enum { Type = QGraphicsItem::UserType + 3 };
 
-    QFlowEditorNodeItem(const QString &title, QGraphicsItem *parent = 0);
+    QFlowEditorNodeItem(Node* node, QGraphicsItem *parent = 0);
 
     QFlowEditorNodePinItem* addPin(const QString &name, bool isOutput, int ptr = 0);
     void addInputPin(const std::string &name);

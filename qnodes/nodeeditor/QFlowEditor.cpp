@@ -21,6 +21,19 @@ QFlowEditor::~QFlowEditor()
     delete scene;
 }
 
+void QFlowEditor::addNodeItem(Node *node)
+{
+    QFlowEditorNodeItem *nodeItem = new QFlowEditorNodeItem(node);
+    scene->addItem(nodeItem);
+    foreach (std::string pinName, node->getInputPins()) {
+        nodeItem->addInputPin(pinName);
+    }
+    foreach (std::string pinName, node->getOutputPins()) {
+        nodeItem->addOutputPin(pinName);
+    }
+}
+
+/*
 void QFlowEditor::addNodeItem(const std::string &name, std::vector<std::string>& inputPins, std::vector<std::string>& outputPins)
 {
     QFlowEditorNodeItem *nodeItem = new QFlowEditorNodeItem(QString::fromStdString(name));
@@ -57,6 +70,18 @@ void QFlowEditor::addNodeItem(const std::string &name, unsigned int inputPins, u
     }
 }
 
+void QFlowEditor::addNodeItem(const std::string &name, NodePinList &inputPins, NodePinList &outputPins)
+{
+    QFlowEditorNodeItem *nodeItem = new QFlowEditorNodeItem(QString::fromStdString(name));
+    scene->addItem(nodeItem);
+    foreach (std::string pinName, inputPins) {
+        nodeItem->addInputPin(pinName);
+    }
+    foreach (std::string pinName, outputPins) {
+        nodeItem->addOutputPin(pinName);
+    }
+}
+*/
 QGraphicsItem* QFlowEditor::itemAt(const QPointF &pos)
 {
 	QList<QGraphicsItem*> items = scene->items(QRectF(pos - QPointF(1,1), QSize(3,3)));
@@ -97,6 +122,7 @@ bool QFlowEditor::eventFilter(QObject *o, QEvent *e)
 				/* if (selBlock)
 					selBlock->setSelected(); */
 				// selBlock = (QNEBlock*) item;
+                emit itemSelected();
 			}
 			break;
 		}
@@ -105,6 +131,8 @@ bool QFlowEditor::eventFilter(QObject *o, QEvent *e)
 			QGraphicsItem *item = itemAt(me->scenePos());
             if (item && (item->type() == QFlowEditorPinConnection::Type || item->type() == QFlowEditorNodeItem::Type))
 				delete item;
+            if(item->type() == QFlowEditorPinConnection::Type)
+                emit itemsDisconnected();
 			// if (selBlock == (QNEBlock*) item)
 				// selBlock = 0;
 			break;
@@ -137,12 +165,14 @@ bool QFlowEditor::eventFilter(QObject *o, QEvent *e)
                     conn->setDestinationPin(port2);
 					conn->updatePath();
 					conn = 0;
+                    emit itemsConnected();
 					return true;
 				}
 			}
 
 			delete conn;
 			conn = 0;
+            emit itemMoved();
 			return true;
 		}
 		break;

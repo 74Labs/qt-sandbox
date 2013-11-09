@@ -16,8 +16,17 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionFullscreen">
+   <property name="text">
+    <string>Fullscreen</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
+ <slots>
+  <slot>flowNodeItemSelected()</slot>
+ </slots>
 </ui>

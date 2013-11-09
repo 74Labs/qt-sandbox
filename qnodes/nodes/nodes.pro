@@ -19,7 +19,10 @@ SOURCES += \
     ../nodeeditor/QFlowEditorNodePin.cpp \
     ../nodeeditor/QFlowEditor.cpp \
     ../nodeeditor/QFlowEditorNode.cpp \
-    ../nodeeditor/QFlowEditorNodePinConnection.cpp
+    ../nodeeditor/QFlowEditorNodePinConnection.cpp \
+    ../nodeeditor/FlowManager.cpp \
+    ../nodeeditor/NodePinList.cpp \
+    ../nodeeditor/NodeType.cpp
 
 HEADERS  += \ 
     mainwindow.h \
@@ -29,7 +32,10 @@ HEADERS  += \
     ../nodeeditor/QFlowEditorNodePinConnection.h \
     ../nodeeditor/FlowEditor.h \
     ../nodeeditor/FlowEditorNodeItem.h \
-    ../nodeeditor/Node.h
+    ../nodeeditor/Node.h \
+    ../nodeeditor/FlowManager.h \
+    ../nodeeditor/NodeType.h \
+    ../nodeeditor/NodePinList.h
 
 FORMS    += \ 
     mainwindow.ui

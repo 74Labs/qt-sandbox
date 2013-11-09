@@ -15,7 +15,11 @@ public:
     ~MainWindow();
 
     FlowEditor* getFlowEditor() const { return flowEditor; }
-
+private slots:
+    void flowNodeItemSelected();
+    void flowNodeItemMoved();
+    void flowNodeItemsConnected();
+    void flowNodeItemsDisconnected();
 private:
     QFlowEditor *flowEditor;
     Ui::MainWindow *ui;

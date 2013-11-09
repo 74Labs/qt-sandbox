@@ -2,9 +2,7 @@
     <qresource prefix="/images">
         <file>icon.png</file>
     </qresource>
-    <qresource prefix="/fonts">
-        <file alias="roboto">RobotoCondensed-Light.ttf</file>
-    </qresource>
+    <qresource prefix="/fonts"/>
     <qresource prefix="/data">
         <file>nodes.xml</file>
     </qresource>
