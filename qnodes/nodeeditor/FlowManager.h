@@ -11,8 +11,9 @@ class FlowManager
 {
 private:
     typedef std::map<std::string, NodeType*> NodeTemplateMap;
+    typedef NodeTemplateMap::iterator NodeTemplateMapIterator;
     FlowEditor* editor;
-    std::map<std::string, NodeType*> nodeTemplates;
+    NodeTemplateMap nodeTemplates;
     std::vector<Node*> nodes;
 public:
     FlowManager(FlowEditor* editor) { setEditor(editor); }

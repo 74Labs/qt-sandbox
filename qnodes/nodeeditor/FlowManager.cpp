@@ -2,18 +2,19 @@
 
 #include <exception>
 
-FlowManager::NodeType *FlowManager::addNodeTemplate(const std::string &name)
+NodeType *FlowManager::addNodeTemplate(const std::string &name)
 {
     NodeType* nodeTemplate = new NodeType();
-    nodeTemplates.insert(nodeTemplates.value_type(name, nodeType));
+    nodeTemplates.insert(NodeTemplateMap::value_type(name, nodeTemplate));
     return nodeTemplate;
 }
 
 Node* FlowManager::addNode(const std::string& name, const std::string& templateName)
 {
-    NodeType* nodeTemplate = nodeTemplates.find(templateName);
-    if(!nodeTemplate) throw std::exception("Template with given name not exists");
-    Node* node = new Node(name);
-    ppooppopo
+    NodeTemplateMapIterator i = nodeTemplates.find(templateName);
+
+    NodeType* nodeTemplate = i->second;
+    if(!nodeTemplate) throw std::exception();
+    Node* node = new MockNode(name);
     return node;
 }

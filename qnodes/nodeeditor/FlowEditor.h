@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Node.h>
+#include <NodeType.h>
 
 class FlowEditor
 {
