@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flow>
-
 <node>
-
 <label>ADSR</label>
-
-    <pins>
-
-        <input>
-
-        <pin></pin>
-
-        </input>
-
-    </pins>
-
+<inputs>
+	<pin></pin>
+</inputs>	
+<outputs>
+	<pin></pin>
+</outputs>
 </node>
-
 </flow>
