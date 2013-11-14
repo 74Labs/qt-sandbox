@@ -14,6 +14,6 @@
 /qnodes\nodes/nodes.pro.user
 *.user
 /qnodes/doc
-/qnodes/build*
+/build*
 
 /qnodes/sfl.ldb
