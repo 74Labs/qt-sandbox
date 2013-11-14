@@ -20,7 +20,7 @@ public:
 
     NodeType* addNodeTemplate(const std::string& name);
 
-    Node* addNode(const std::string& name, const std::string& templateName);
+    void addNode(Node* node);
 
     void loadFlowFromFile(const std::string& filename);
     void saveFlowToFile(const std::string& filename);

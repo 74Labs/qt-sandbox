@@ -3,24 +3,35 @@
 #include <string>
 #include <vector>
 
-class Node
-{
-public:
-    virtual ~Node() {}
-    virtual const std::string getName() = 0;
-    virtual const std::vector<std::string> getInputPins() = 0;
-    virtual const std::vector<std::string> getOutputPins() = 0;
-};
+class NodePin;
 
-class MockNode: public Node
+class Node
 {
 private:
     const std::string nodeName;
-    std::vector<std::string> inputs;
-    std::vector<std::string> outputs;
+    std::vector<NodePin*> nodeInputPins;
+    std::vector<NodePin*> nodeOutputPins;
 public:
-    MockNode(const std::string& name):nodeName(name) {}
-    const std::string getName() { return nodeName; }
-    const std::vector<std::string> getInputPins() { return inputs; }
-    const std::vector<std::string> getOutputPins() { return outputs; }
+    Node(const std::string& name);
+    ~Node();
+    const std::string getNodeName() { return nodeName; }
+    const std::vector<NodePin*> getNodeInputPins() { return nodeInputPins; }
+    const std::vector<NodePin*> getNodeOutputPins() { return nodeOutputPins; }
+    NodePin* addNodeInputPin(const std::string& name, const std::string& protocolName = 0);
+    NodePin* addNodeOutputPin(const std::string& name, const std::string& protocolName = 0);
+};
+
+class NodePin
+{
+private:
+    const std::string pinName;
+    const std::string pinProtocolName;
+protected:
+
+public:
+    NodePin(const std::string& name, const std::string& protocolName = 0);
+    ~NodePin();
+    const std::string getPinName() { return pinName; }
+    bool isPinMulti() { return true; }
+    const std::string getPinProtocolName() { return pinProtocolName; }
 };

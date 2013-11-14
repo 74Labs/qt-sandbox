@@ -21,6 +21,9 @@ public:
     virtual ~QFlowEditor();
 
     void addNodeItem(Node *node);
+    void deleteNodeItem(Node *node);
+
+    std::vector<FlowEditorNodeItem*> getItems();
 
     /*
     void addNodeItem(const std::string& name, std::vector<std::string>& inputPins, std::vector<std::string>& outputPins);

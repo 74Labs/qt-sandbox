@@ -1,6 +1,7 @@
 #include <FlowManager.h>
 
 #include <exception>
+#include <QXmlStreamReader>
 
 NodeType *FlowManager::addNodeTemplate(const std::string &name)
 {
@@ -9,12 +10,21 @@ NodeType *FlowManager::addNodeTemplate(const std::string &name)
     return nodeTemplate;
 }
 
-Node* FlowManager::addNode(const std::string& name, const std::string& templateName)
+void FlowManager::addNode(Node *node)
 {
+    editor->addNodeItem(node);
+}
+
+/*
     NodeTemplateMapIterator i = nodeTemplates.find(templateName);
 
     NodeType* nodeTemplate = i->second;
     if(!nodeTemplate) throw std::exception();
-    Node* node = new MockNode(name);
+    Node* node = new MockNode(node);
+    for(std::vector<std::string>::iterator i = nodeTemplate->getInputPins().begin(); i != nodeTemplate->getInputPins().end(); ++i) {
+        node->getInputPins().push_back(i->name);
+    }
+    editor->addNodeItem(node);
     return node;
 }
+*/

@@ -25,7 +25,7 @@ QFlowEditorNodeItem::QFlowEditorNodeItem(Node *node, QGraphicsItem *parent) : Fl
     borderItem.setPos(0, 0);
 
     titleItem.setParentItem(this);
-    titleItem.setText(QString::fromStdString(node->getName()));
+    titleItem.setText(QString::fromStdString(node->getNodeName()));
     //titleItem.setFont(QFont("Ubuntu", 10, QFont::Bold));
 
     iconItem.setParentItem(this);

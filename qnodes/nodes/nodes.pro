@@ -22,7 +22,8 @@ SOURCES += \
     ../nodeeditor/QFlowEditorNodePinConnection.cpp \
     ../nodeeditor/FlowManager.cpp \
     ../nodeeditor/NodePinList.cpp \
-    ../nodeeditor/NodeType.cpp
+    ../nodeeditor/NodeType.cpp \
+    ../nodeeditor/Node.cpp
 
 HEADERS  += \ 
     mainwindow.h \

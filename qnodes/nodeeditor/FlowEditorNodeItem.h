@@ -14,4 +14,5 @@ public:
     Node* getNode() { return node; }
     virtual void addInputPin(const std::string& name) = 0;
     virtual void addOutputPin(const std::string& name) = 0;
+    //virtual void deleteInputPin(const std::string& name) = 0;
 };

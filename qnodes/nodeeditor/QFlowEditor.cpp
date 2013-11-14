@@ -12,7 +12,6 @@ QFlowEditor::QFlowEditor(QWidget *parent) :
     conn = 0;
     scene = new QGraphicsScene();
     scene->installEventFilter(this);
-    scene->setFont(QFont("Ubuntu", 10));
     setScene(scene);
 }
 
@@ -25,12 +24,17 @@ void QFlowEditor::addNodeItem(Node *node)
 {
     QFlowEditorNodeItem *nodeItem = new QFlowEditorNodeItem(node);
     scene->addItem(nodeItem);
-    foreach (std::string pinName, node->getInputPins()) {
-        nodeItem->addInputPin(pinName);
+    foreach (NodePin* pin, node->getNodeInputPins()) {
+        nodeItem->addInputPin(pin->getPinName());
     }
-    foreach (std::string pinName, node->getOutputPins()) {
-        nodeItem->addOutputPin(pinName);
+    foreach (NodePin* pin, node->getNodeOutputPins()) {
+        nodeItem->addOutputPin(pin->getPinName());
     }
+}
+
+void QFlowEditor::deleteNodeItem(Node *node)
+{
+
 }
 
 /*
