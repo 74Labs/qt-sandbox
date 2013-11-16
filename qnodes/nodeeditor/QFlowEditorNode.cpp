@@ -2,11 +2,11 @@
 
 #include <QFlowEditorNodePin.h>
 
-QFlowEditorNodeItem::QFlowEditorNodeItem(Node *node, QGraphicsItem *parent) : FlowEditorNodeItem(node), QGraphicsPathItem(parent)
+QFlowEditorNodeItem::QFlowEditorNodeItem(sfl::flow::Node *node, QGraphicsItem *parent) : sfl::flow::FlowEditorNodeItem(node), QGraphicsPathItem(parent)
 {
     borderPen = QPen(Qt::black);
     borderPen.setCosmetic(true);
-    borderPen.setWidth(1);
+    borderPen.setWidthF(0.8f);
 
     QLinearGradient fill;
     fill.setCoordinateMode(QGradient::ObjectBoundingMode);
@@ -26,10 +26,14 @@ QFlowEditorNodeItem::QFlowEditorNodeItem(Node *node, QGraphicsItem *parent) : Fl
 
     titleItem.setParentItem(this);
     titleItem.setText(QString::fromStdString(node->getNodeName()));
-    //titleItem.setFont(QFont("Ubuntu", 10, QFont::Bold));
+    titleItem.setFont(QFont("Sans Serif", 8, QFont::Bold));
 
     iconItem.setParentItem(this);
     //iconItem.setPixmap(QPixmap(":/images/icon.png"));
+
+    collapseIconItem.setParentItem(this);
+    collapseIconItem.setFont(QFont("FontAwesome", 12, QFont::Light));
+    collapseIconItem.setText(QString(0xf0ae));
 
     setFlag(QGraphicsItem::ItemIsMovable);
 	setFlag(QGraphicsItem::ItemIsSelectable);
@@ -41,12 +45,14 @@ void QFlowEditorNodeItem::prepare()
 {
 
     width = std::max(DEFAULT_MIN_WIDTH, (int)iconItem.boundingRect().width() + 2 * contentPadding);
+    width = std::max(width, (int)collapseIconItem.boundingRect().width() + (int)titleItem.boundingRect().width() + 5 * contentPadding);
 
     int y = contentPadding;
 
     titleItem.setPos(contentPadding, y);
+    collapseIconItem.setPos(titleItem.boundingRect().width() + 4 * contentPadding, y);
 
-    y += titleItem.boundingRect().height() + contentPadding;
+    y += titleItem.boundingRect().height() + 2 * contentPadding;
 
     iconItem.setPos(contentPadding, y);
 
@@ -74,38 +80,20 @@ void QFlowEditorNodeItem::prepare()
     borderItem.setPath(borderPath);
 }
 
-QFlowEditorNodePinItem* QFlowEditorNodeItem::addPin(const QString &name, bool isOutput, int ptr)
+sfl::flow::FlowEditorNodeItemPin* QFlowEditorNodeItem::addPin(sfl::flow::NodePin* pin)
 {
-    QFlowEditorNodePinItem *port = new QFlowEditorNodePinItem(this);
-	port->setName(name);
-	port->setIsOutput(isOutput);
-	port->setPtr(ptr);
+    QFlowEditorNodePinItem *pinItem = new QFlowEditorNodePinItem(pin, this);
+    pinItem->setName(QString::fromStdString(pin->getPinName()));
+    pinItem->setIsOutput(pin->getDirection() == sfl::flow::NodePin::Direction::Output);
 
     prepare();
 
-	return port;
+    return pinItem;
 }
 
-void QFlowEditorNodeItem::addInputPin(const std::string &name)
+void QFlowEditorNodeItem::setPosition(float x, float y)
 {
-    addPin(QString::fromStdString(name), false);
-}
-
-void QFlowEditorNodeItem::addOutputPin(const std::string &name)
-{
-    addPin(QString::fromStdString(name), true);
-}
-
-void QFlowEditorNodeItem::addInputPorts(const QStringList &names)
-{
-	foreach(QString n, names)
-        addPin(n, false);
-}
-
-void QFlowEditorNodeItem::addOutputPorts(const QStringList &names)
-{
-	foreach(QString n, names)
-        addPin(n, true);
+    setPos(x, y);
 }
 
 #include <QStyleOptionGraphicsItem>
@@ -128,7 +116,7 @@ void QFlowEditorNodeItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
     painter->drawPath(path());
 
 }
-
+/*
 QFlowEditorNodeItem* QFlowEditorNodeItem::clone()
 {
     QFlowEditorNodeItem *b = new QFlowEditorNodeItem(getNode());
@@ -156,7 +144,7 @@ QVector<QFlowEditorNodePinItem*> QFlowEditorNodeItem::ports()
 	}
 	return res;
 }
-
+*/
 QVariant QFlowEditorNodeItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 

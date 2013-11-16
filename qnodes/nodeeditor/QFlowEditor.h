@@ -8,10 +8,12 @@
 #include <QFontDatabase>
 
 #include <FlowEditor.h>
+#include <Node.h>
 
+class QFlowEditorNodeItem;
 class QFlowEditorPinConnection;
 
-class QFlowEditor : public QGraphicsView, public FlowEditor
+class QFlowEditor : public QGraphicsView, public sfl::flow::FlowEditor
 {
     Q_OBJECT
 public:
@@ -20,10 +22,10 @@ public:
 
     virtual ~QFlowEditor();
 
-    void addNodeItem(Node *node);
-    void deleteNodeItem(Node *node);
+    sfl::flow::FlowEditorNodeItem* createNodeItem(sfl::flow::Node *node);
+    void deleteNodeItem(sfl::flow::Node *node);
 
-    std::vector<FlowEditorNodeItem*> getItems();
+    std::vector<sfl::flow::FlowEditorNodeItem*> getItems();
 
     /*
     void addNodeItem(const std::string& name, std::vector<std::string>& inputPins, std::vector<std::string>& outputPins);
@@ -32,13 +34,6 @@ public:
     void addNodeItem(const std::string& name, NodePinList& inputPins, NodePinList& outputPins);
     */
     bool eventFilter(QObject *, QEvent *);
-
-signals:
-
-    void itemSelected();
-    void itemMoved();
-    void itemsConnected();
-    void itemsDisconnected();
 
 private:
 

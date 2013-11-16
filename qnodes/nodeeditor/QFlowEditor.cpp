@@ -20,19 +20,20 @@ QFlowEditor::~QFlowEditor()
     delete scene;
 }
 
-void QFlowEditor::addNodeItem(Node *node)
+sfl::flow::FlowEditorNodeItem *QFlowEditor::createNodeItem(sfl::flow::Node *node)
 {
     QFlowEditorNodeItem *nodeItem = new QFlowEditorNodeItem(node);
     scene->addItem(nodeItem);
-    foreach (NodePin* pin, node->getNodeInputPins()) {
-        nodeItem->addInputPin(pin->getPinName());
+    foreach (sfl::flow::NodePin* pin, node->getNodeInputPins()) {
+        nodeItem->addPin(pin);
     }
-    foreach (NodePin* pin, node->getNodeOutputPins()) {
-        nodeItem->addOutputPin(pin->getPinName());
+    foreach (sfl::flow::NodePin* pin, node->getNodeOutputPins()) {
+        nodeItem->addPin(pin);
     }
+    return nodeItem;
 }
 
-void QFlowEditor::deleteNodeItem(Node *node)
+void QFlowEditor::deleteNodeItem(sfl::flow::Node *node)
 {
 
 }
@@ -123,10 +124,7 @@ bool QFlowEditor::eventFilter(QObject *o, QEvent *e)
 				return true;
             } else if (item && item->type() == QFlowEditorNodeItem::Type)
 			{
-				/* if (selBlock)
-					selBlock->setSelected(); */
-				// selBlock = (QNEBlock*) item;
-                emit itemSelected();
+                notifyOnNodeItemSelected((QFlowEditorNodeItem*)item);
 			}
 			break;
 		}
@@ -135,8 +133,8 @@ bool QFlowEditor::eventFilter(QObject *o, QEvent *e)
 			QGraphicsItem *item = itemAt(me->scenePos());
             if (item && (item->type() == QFlowEditorPinConnection::Type || item->type() == QFlowEditorNodeItem::Type))
 				delete item;
-            if(item->type() == QFlowEditorPinConnection::Type)
-                emit itemsDisconnected();
+            //if(item->type() == QFlowEditorPinConnection::Type)
+                //emit nodesDisconnected();
 			// if (selBlock == (QNEBlock*) item)
 				// selBlock = 0;
 			break;
@@ -165,18 +163,23 @@ bool QFlowEditor::eventFilter(QObject *o, QEvent *e)
 
                 if (port1->node() != port2->node() && port1->isOutput() != port2->isOutput() && !port1->isConnectedTo(port2))
 				{
+
+                    notifyBeforeNodeItemsConnected();
+
                     conn->setEndPos(port2->scenePos());
                     conn->setDestinationPin(port2);
 					conn->updatePath();
 					conn = 0;
-                    emit itemsConnected();
+
+                    notifyOnNodeItemsConnected();
+
 					return true;
 				}
 			}
 
 			delete conn;
 			conn = 0;
-            emit itemMoved();
+            //emit itemMoved();
 			return true;
 		}
 		break;

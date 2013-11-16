@@ -12,6 +12,7 @@ TARGET = qnodes
 TEMPLATE = app
 
 INCLUDEPATH += ../nodeeditor
+INCLUDEPATH += ../../
 
 SOURCES += \ 
     mainwindow.cpp \
@@ -21,7 +22,6 @@ SOURCES += \
     ../nodeeditor/QFlowEditorNode.cpp \
     ../nodeeditor/QFlowEditorNodePinConnection.cpp \
     ../nodeeditor/FlowManager.cpp \
-    ../nodeeditor/NodePinList.cpp \
     ../nodeeditor/NodeType.cpp \
     ../nodeeditor/Node.cpp
 
@@ -36,7 +36,9 @@ HEADERS  += \
     ../nodeeditor/Node.h \
     ../nodeeditor/FlowManager.h \
     ../nodeeditor/NodeType.h \
-    ../nodeeditor/NodePinList.h
+    ../../sfl/Observer.h \
+    ../../sfl/Observable.h \
+    ../../sfl/Debug.h
 
 FORMS    += \ 
     mainwindow.ui

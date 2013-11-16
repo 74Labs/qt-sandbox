@@ -1,39 +1,43 @@
 #include <Node.h>
 
-#include <iostream>
+#include <sfl/Debug.h>
 
-Node::Node(const std::string &name) : nodeName(name)
-{
+namespace sfl {
 
-}
+namespace flow {
+
+
 
 Node::~Node()
 {
     while(!nodeInputPins.empty()) delete nodeInputPins.back(), nodeInputPins.pop_back();
     while(!nodeOutputPins.empty()) delete nodeOutputPins.back(), nodeOutputPins.pop_back();
-    std::cout << "Node destroyed" << std::endl;
+    DEBUG_COUT("Node destroyed");
 }
 
-NodePin *Node::addNodeInputPin(const std::string &name, const std::string &protocolName)
+Node *Node::addNodeInputPin(const std::string &name, const std::string &protocolName)
 {
-    NodePin* node = new NodePin(name, protocolName);
-    nodeInputPins.push_back(node);
-    return node;
+    NodePin* pin = new NodePin(name, NodePin::Direction::Input, protocolName);
+    nodeInputPins.push_back(pin);
+    NodeEvents::PinAddedEvent event(this, pin);
+    Observable<NodeEvents::PinAddedEvent*>::notifyObservers(&event);
+    return this;
 }
 
-NodePin *Node::addNodeOutputPin(const std::string &name, const std::string &protocolName)
+Node *Node::addNodeOutputPin(const std::string &name, const std::string &protocolName)
 {
-    NodePin* node = new NodePin(name, protocolName);
-    nodeOutputPins.push_back(node);
-    return node;
-}
-
-NodePin::NodePin(const std::string &name, const std::string &protocolName)  : pinName(name), pinProtocolName(protocolName)
-{
-
+    NodePin* pin = new NodePin(name, NodePin::Direction::Output, protocolName);
+    nodeOutputPins.push_back(pin);
+    NodeEvents::PinAddedEvent event(this, pin);
+    this->Observable<NodeEvents::PinAddedEvent*>::notifyObservers(&event);
+    return this;
 }
 
 NodePin::~NodePin()
 {
-    std::cout << "Node Pin destroyed" << std::endl;
+    DEBUG_COUT("Node Pin destroyed");
+}
+
+}
+
 }

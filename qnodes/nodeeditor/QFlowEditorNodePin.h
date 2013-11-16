@@ -6,15 +6,17 @@
 #include <QPen>
 #include <QGraphicsSceneHoverEvent>
 
+#include <FlowEditorNodeItem.h>
+
 class QFlowEditorNodeItem;
 class QFlowEditorPinConnection;
 
-class QFlowEditorNodePinItem : public QGraphicsPathItem
+class QFlowEditorNodePinItem : public sfl::flow::FlowEditorNodeItemPin, public QGraphicsPathItem
 {
 public:
 	enum { Type = QGraphicsItem::UserType + 1 };
 
-    QFlowEditorNodePinItem(QFlowEditorNodeItem *parent);
+    QFlowEditorNodePinItem(sfl::flow::NodePin* pin, QFlowEditorNodeItem *parent);
     ~QFlowEditorNodePinItem();
 
 	void setName(const QString &n);

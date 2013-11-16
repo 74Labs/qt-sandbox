@@ -3,7 +3,8 @@
 #include <QFlowEditorNode.h>
 #include <QFlowEditorNodePinConnection.h>
 
-QFlowEditorNodePinItem::QFlowEditorNodePinItem(QFlowEditorNodeItem *parent):
+QFlowEditorNodePinItem::QFlowEditorNodePinItem(sfl::flow::NodePin *pin, QFlowEditorNodeItem *parent) :
+    sfl::flow::FlowEditorNodeItemPin(pin),
     QGraphicsPathItem((QGraphicsItem*)parent)
 {
     borderPen = QPen(Qt::black);

@@ -9,9 +9,7 @@
 
 #include <FlowEditorNodeItem.h>
 
-class QFlowEditorNodePinItem;
-
-class QFlowEditorNodeItem : public FlowEditorNodeItem, public QGraphicsPathItem
+class QFlowEditorNodeItem : public sfl::flow::FlowEditorNodeItem, public QGraphicsPathItem
 {
 private:
 
@@ -25,24 +23,18 @@ public:
 
 	enum { Type = QGraphicsItem::UserType + 3 };
 
-    QFlowEditorNodeItem(Node* node, QGraphicsItem *parent = 0);
+    QFlowEditorNodeItem(sfl::flow::Node* node, QGraphicsItem *parent = 0);
 
-    QFlowEditorNodePinItem* addPin(const QString &name, bool isOutput, int ptr = 0);
-    void addInputPin(const std::string &name);
-    void addOutputPin(const std::string &name);
-	void addInputPorts(const QStringList &names);
-	void addOutputPorts(const QStringList &names);
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QFlowEditorNodeItem* clone();
-    QVector<QFlowEditorNodePinItem*> ports();
+    sfl::flow::FlowEditorNodeItemPin* addPin(sfl::flow::NodePin *pin);
+
+    void setPosition(float x, float y);
 
 	int type() const { return Type; }
     const QString title() const { return titleItem.text(); }
 
-    //QRectF boundingRect() const;
-
 protected:
 
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
@@ -59,6 +51,7 @@ private:
     QBrush selectedFillBrush;
     QBrush normalFillBrush;
 
+    QGraphicsSimpleTextItem collapseIconItem;
     QGraphicsPathItem borderItem;
     QGraphicsSimpleTextItem titleItem;
     QGraphicsPixmapItem iconItem;

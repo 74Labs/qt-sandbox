@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include <QFlowEditor.h>
 
+#include <Node.h>
+
 namespace Ui {
 class MainWindow;
 }
@@ -14,12 +16,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    FlowEditor* getFlowEditor() const { return flowEditor; }
-private slots:
-    void flowNodeItemSelected();
-    void flowNodeItemMoved();
-    void flowNodeItemsConnected();
-    void flowNodeItemsDisconnected();
+    sfl::flow::FlowEditor* getFlowEditor() const { return flowEditor; }
+
 private:
     QFlowEditor *flowEditor;
     Ui::MainWindow *ui;
